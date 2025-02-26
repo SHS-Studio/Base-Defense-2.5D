@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Enemy
   - Baricate
+  - path1points
+  - path2points
+  - path3points
+  - path5points
   layers:
   - Default
   - TransparentFX
@@ -14,7 +18,7 @@ TagManager:
   - Water
   - UI
   - Character
-  - 
+  - Enemy
   - 
   - 
   - 

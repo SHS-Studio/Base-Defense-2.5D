@@ -1,101 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class WayPoints : MonoBehaviour
 {
-    public static WayPoints instance { get; set; }
+    public Enemy m_Enemy;
+    public Health hp;
+    private float speed; // Movement speed of the enemy
+    public float reachThreshold = 0.2f; // Distance threshold to consider target reached
+    public string targetTag; // Tag of the target to find
+    public LayerMask excludeLayer;
 
-    [Header("Path Settings")]
-    public List<Transform> waypoints; // List of waypoints to follow
-    public float speed = 5f;          // Movement speed
-    public float reachThreshold = 0.1f; // Distance to waypoint to consider it reached
-
-    public int currentWaypointIndex = 0; // Current waypoint being targeted
-
-    [Header("Platform Settings")]
-    public GameObject platform;       // Reference to the platform object
-    public float platformLength = 10f; // Length to move the platform forward
-
-
-    private Vector3 initialPlatformPosition;
-
-    public void Awake()
-    {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
-    }
+    private Transform target;
 
     void Start()
     {
-        if (waypoints == null || waypoints.Count == 0)
+        m_Enemy = GetComponent<Enemy>();
+        hp = GetComponent<Health>();
+        speed = m_Enemy.speed;
+
+
+        // Find the target in the scene
+
+
+        GameObject targetObject = GameObject.FindGameObjectWithTag(targetTag);
+        if (targetObject != null)
         {
-            Debug.LogWarning("No initial waypoints assigned for the path.");
-            return;
+            target = targetObject.transform;
         }
 
-        initialPlatformPosition = platform.transform.position;
+
     }
 
     void Update()
     {
-        if (waypoints == null || waypoints.Count == 0)
-        {
-            Debug.LogWarning("No waypoints assigned for the path.");
-            return;
-        }
+        if (target == null) return;
 
-        MoveAlongPath();
+        // Move towards the target
+        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        ModifyOverrideLayers();
     }
 
-    void MoveAlongPath()
+    void ModifyOverrideLayers()
     {
-        Transform targetWaypoint = waypoints[currentWaypointIndex];
-        Vector3 direction = (targetWaypoint.position - transform.position).normalized;
-        transform.position += direction * speed * Time.deltaTime;
-
-        float distanceToWaypoint = Vector3.Distance(transform.position, targetWaypoint.position);
-        if (distanceToWaypoint <= reachThreshold)
+        float excludeLayerdistance =  Vector3.Distance(transform.position, target.position);
+        if (excludeLayerdistance <= 1f)
         {
-            currentWaypointIndex++;
-            if (currentWaypointIndex >= waypoints.Count)
-            {
-                currentWaypointIndex = 0; // Reset to the first waypoint
+               Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
+            rb2d.excludeLayers = excludeLayer.value;
 
-            }
         }
 
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * speed);
-        }
-    }
-
-  
-
-    private void OnDrawGizmos()
-    {
-        if (waypoints == null || waypoints.Count == 0)
-            return;
-
-        Gizmos.color = Color.green;
-        for (int i = 0; i < waypoints.Count; i++)
-        {
-            if (waypoints[i] != null)
-            {
-                Gizmos.DrawSphere(waypoints[i].position, 0.2f);
-                if (i < waypoints.Count - 1 && waypoints[i + 1] != null)
-                {
-                    Gizmos.DrawLine(waypoints[i].position, waypoints[i + 1].position);
-                }
-            }
-        }
     }
 }
+
+

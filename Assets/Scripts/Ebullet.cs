@@ -2,31 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Ebullet : MonoBehaviour
 {
-   public Card  card;
-
+    public Enemy enemy;
     // Start is called before the first frame update
     void Start()
     {
-        card = GameObject.FindObjectOfType<Card>();
+        enemy = GameObject.FindObjectOfType<Enemy>();
     }
 
     // Update is called once per frame
     void Update()
     {
-       // Destroy(gameObject,2f);
-    }
 
-  
+    }
     public void OnTriggerEnter2D(Collider2D coll)
     {
-  
-        if (coll.gameObject.tag == "Enemy")
+        if (coll.gameObject.tag == "Baricate")
         {
-            coll.gameObject.GetComponent<Health>().TakeDamage(card.Damage);
+            coll.gameObject.GetComponent<Health>().TakeDamage(enemy.damage);
             Destroy(gameObject);
         }
 
     }
+
+      
 }
