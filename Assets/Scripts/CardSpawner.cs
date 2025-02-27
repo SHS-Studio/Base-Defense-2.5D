@@ -6,9 +6,10 @@ using UnityEngine.EventSystems;
 
 public class CardSpawner : MonoBehaviour
 {
+ 
     public GameObject[] cardPrefabs; // Array of possible card prefabs
     public Transform[] spawnPoints; // Empty bases where cards will spawn
-
+   
     void Start()
     {
         string savedCards = PlayerPrefs.GetString("SelectedCards", "");

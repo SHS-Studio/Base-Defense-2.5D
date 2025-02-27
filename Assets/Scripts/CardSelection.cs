@@ -35,7 +35,7 @@ public class CardSelection : MonoBehaviour
             string selectedCardsString = string.Join(",", selectedCards);
             PlayerPrefs.SetString("SelectedCards", selectedCardsString);
             PlayerPrefs.Save();
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("Level1");
         }
     }
 

@@ -15,6 +15,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public bool isPlaced = false;
     private Transform originalParent;
 
+    public TextMeshProUGUI ExilerCost; // Reference to TextMeshPro UI element
+
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -40,6 +42,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void Update()
     {
         IncreaseElixir();
+        UpdateExilerCostText();
     }
 
     void IncreaseElixir()
@@ -96,6 +99,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             elixirSlider.value -= elixirCost;
             UpdateElixirText();
 
+        }
+    }
+
+    void UpdateExilerCostText()
+    {
+        if (ExilerCost != null)
+        {
+            ExilerCost.text =  elixirCost.ToString("0") ;
         }
     }
 }
