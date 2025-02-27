@@ -22,9 +22,21 @@ public class WaveGeneration : MonoBehaviour
     private int maxLevel; // Max Level
     private float difficultyMultiplier = 1.0f; // Difficulty scaling factor
 
+    public int totalenemy;
 
+    private void Awake()
+    {
+        totalenemy = 0;
+        for (int i = 1; i <= totalWaves; i++)
+        {
+            int currentwave = i;
+            int curentenemycount = Mathf.RoundToInt((3 + (currentwave - 1) * 3) * difficultyMultiplier); // More enemies per wave
+            totalenemy += curentenemycount;
+        }
+    }
     void Start()
     {
+       
         GameLogic Gm = FindObjectOfType<GameLogic>(); // Get reference from the scene
 
         if (Gm != null)
@@ -45,12 +57,15 @@ public class WaveGeneration : MonoBehaviour
 
     IEnumerator SpawnWaves()
     {
-        while (currentWave <= totalWaves)
+
+        for (int i = 0;i < totalWaves; i++)
         {
             yield return StartCoroutine(SpawnWave(currentWave));
             yield return new WaitForSeconds(baseTimeBetweenWaves / difficultyMultiplier); // Decrease wave interval with difficulty
             currentWave++;
+            currentWave = Mathf.Clamp(currentWave, 1, totalWaves);
         }
+      
     }
 
     IEnumerator SpawnWave(int waveNumber)

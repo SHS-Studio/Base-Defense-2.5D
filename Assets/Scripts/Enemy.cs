@@ -11,6 +11,7 @@ public enum EnemyType
 }
 public class Enemy : MonoBehaviour
 {
+
     public EnemyType type;
     public float damage;
     public float speed;
@@ -80,6 +81,12 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    public void OnDisable()
+    {
+       GameLogic Logic =  GameObject.FindObjectOfType<GameLogic>();
+        Logic.enemiesDefeated++;
     }
 }
  

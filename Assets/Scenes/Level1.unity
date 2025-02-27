@@ -1036,7 +1036,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -14, y: 1}
+  m_AnchoredPosition: {x: -5.8, y: -0.3}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &736866158
@@ -1646,11 +1646,12 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 10892540}
   totalWaves: 2
-  baseTimeBetweenWaves: 20
+  baseTimeBetweenWaves: 15
   baseTimeBetweenEnemies: 1.5
   currentWave: 1
   enemiesRemaining: 0
   WaveCount: {fileID: 2059092086}
+  totalenemy: 0
 --- !u!114 &1458269058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1667,7 +1668,6 @@ MonoBehaviour:
   Baricade: {fileID: 2122221364}
   maxLevel: 11
   CurrentLevel: 1
-  totalEnemies: 0
   enemiesDefeated: 0
 --- !u!1 &1477545518
 GameObject:
@@ -2226,7 +2226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a38f8cb077318d469fb1436efb99d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHp: 2000
+  MaxHp: 5000
   CurntHp: 100
   hpText: {fileID: 736866158}
 --- !u!1 &6229686899389219285

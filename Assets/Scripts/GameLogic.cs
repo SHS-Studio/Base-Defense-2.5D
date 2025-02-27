@@ -10,7 +10,7 @@ public class GameLogic : MonoBehaviour
     public GameObject Baricade;
     public int maxLevel = 10;
     public int CurrentLevel = 1;
-    public int totalEnemies;
+    //public int totalEnemies;
     public int enemiesDefeated;
 
     void Start()
@@ -27,14 +27,15 @@ public class GameLogic : MonoBehaviour
     }
     public void WiningLogic()
     {
-        
+
         Health hp = Baricade.GetComponent<Health>();
         int curntwave = waveGeneration.currentWave;
         int totalwave = waveGeneration.totalWaves;
 
-        if (hp.MaxHp > 0 && curntwave == totalwave) // Ensuring player wins only when the last wave is cleared
+
+        if (hp.MaxHp > 0 && curntwave == totalwave && waveGeneration.totalenemy == enemiesDefeated) // Ensuring player wins only when the last wave is cleared
         {
-            CurrentLevel++;
+           // CurrentLevel++;
             SaveProgress();
             LoadNextLevel();
         }
@@ -50,20 +51,20 @@ public class GameLogic : MonoBehaviour
 
             ResetGame();
             LoadProgress();
-           
+
         }
     }
     void LoadNextLevel()
     {
         if (CurrentLevel > maxLevel)
         {
-            SceneManager.LoadScene("Level1");
+            SceneManager.LoadScene("Level" + (CurrentLevel + 1).ToString());
         }
-       
+
     }
     void SaveProgress()
     {
-        PlayerPrefs.SetInt("CurrentLevel", CurrentLevel);
+        PlayerPrefs.SetInt("CurrentLevel", CurrentLevel +1);
         PlayerPrefs.Save();
     }
 
@@ -72,12 +73,17 @@ public class GameLogic : MonoBehaviour
         CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
     }
 
- 
+
     public void ResetGame()
     {
         PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("CardSelection");
     }
+    [ContextMenu("resetsavedata")]
+    private void resetsavedata()
+    {
+        PlayerPrefs.SetInt("CurrentLevel", 1);
 
+    }
     
 }
