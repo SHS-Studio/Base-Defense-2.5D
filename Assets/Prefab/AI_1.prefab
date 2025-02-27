@@ -175,13 +175,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 30
+  damage: 10
   speed: 0.5
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
   projectilePrefab: {fileID: 4315030495742075908, guid: cfdaa227e064e4842b7146baf46d5b90, type: 3}
   target: {fileID: 0}
-  attackRange: 100
+  attackRange: 1
   spawnInterval: 2
   spawnPoint: {fileID: 1716253973096439251}
+  Bulletforce: 20
   isAttacking: 0
 --- !u!114 &4636761670713027592
 MonoBehaviour:
