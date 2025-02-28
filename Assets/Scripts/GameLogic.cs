@@ -56,8 +56,8 @@ public class GameLogic : MonoBehaviour
     }
     void LoadNextLevel()
     {
-        if (CurrentLevel > maxLevel)
-        {
+        if (CurrentLevel < maxLevel)
+        { 
             SceneManager.LoadScene("Level" + (CurrentLevel + 1).ToString());
         }
 
